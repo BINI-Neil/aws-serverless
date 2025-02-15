@@ -1,0 +1,48 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: juswa123
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: sample-app-neil
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-southeast-2
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: 
+        - "*"
+      Resource: "*"
+  environment:
+    DYNAMO_TABLE: sample-db-1
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+  insertData:
+    handler: insert.insertData
+    events:
+      - httpApi:
+          path: /insert
+          method: post
+  getData:
+    handler: get.getData
+    events:
+      -  httpApi:
+          path:  /get/{id}
+          method: get
+  updateData:
+    handler: update.updateData
+    events:
+      - httpApi:
+         path: /update/{id}  # URL will pass the 'id' as a path parameter
+         method: put
+  deleteData:
+    handler: delete.deleteData
+    events:
+      - httpApi:
+         path: /delete/{id}  # URL will pass the 'id' as a path parameter
+         method: delete
