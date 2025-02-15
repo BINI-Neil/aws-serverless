@@ -13,6 +13,7 @@ provider:
       Resource: "*"
   environment:
     DYNAMO_TABLE: sample-db-1
+    S3_BUCKET: sample-bucket-neil
 
 functions:
   hello:
@@ -45,4 +46,28 @@ functions:
     events:
       - httpApi:
          path: /delete/{id}  # URL will pass the 'id' as a path parameter
+         method: delete
+  getAlldata:
+    handler: getall.getAlldata
+    events:
+      - httpApi:
+         path: /getall
+         method: get
+  generateSignedUrl:
+    handler: upload.generateSignedUrl
+    events:
+      - httpApi:
+         path: /upload
+         method: get
+  getImageUrl:
+    handler: getimage.getImageUrl
+    events:
+      - httpApi:
+         path: /getimage
+         method: get
+  deleteImage:
+    handler: deleteImage.deleteImagefile
+    events:
+      - httpApi:
+         path: /deleteimage
          method: delete
